@@ -45,6 +45,7 @@ mensajes_log = []
 # Funcion para agregar mensajes y guardar en la base de datos
 def agregar_mensajes_log(texto):
     mensajes_log.append(texto)
+    print("Si entro")
 
     # Guardar el mensaje en la base de datos
     nuevo_registro = Log(texto=texto)
@@ -93,6 +94,7 @@ def recibir_mensajes(req):
 
         agregar_mensajes_log(json.dups(text))
         agregar_mensajes_log(json.dups(numero))
+        
 
         return jsonify({'messaje':'EVENT_RECEIVED'})
     except Exception as e:
@@ -145,4 +147,4 @@ def enviar_mensajes(texto,numero):
 
 
 if __name__=='__main__':
-    app.run(host='0.0.0.0',port=80,debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
