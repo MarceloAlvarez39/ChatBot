@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import http.client
 import json
 
 app = Flask(__name__)
@@ -96,6 +97,52 @@ def recibir_mensajes(req):
         return jsonify({'messaje':'EVENT_RECEIVED'})
     except Exception as e:
         return jsonify({'messaje':'EVENT_RECEIVED'})
+
+def enviar_mensajes(texto,numero):
+    texto = texto.lower()
+    if "hola" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": "523318452683",
+            "type": "text",
+            "text": {
+                "preview_url": True,
+                "body": "Visita nuestra página web https://cryob.com para conocernos. "
+            }
+        }
+    else:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": "523318452683",
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Se mas específico Bob."
+            }
+        }
+    
+    #convertir el diccionario en tipo json
+    data = json.dumps(data)
+
+    headers = {
+        "Content-Type" : "application/json",
+        "Autorization" : "Bearer EACAeWmtpbAgBO99HW4Mq698W78nM5BG8RVcZCfowF2aZC4a7JZCKk0ZBQfJLXRZAzYtTOypgrx3N4BXSMuZBBPGgeZAE6GyJQkwNxicBwBwo9iQ3wtINhZBCvTf77WjqyieOxPDtZA7qD6n3uhjG0eGpQkTKVzZA85mcTghCQ3AJshuf4yZAbMj8dIdGIHQNkOZCQRVX5ygxCCb7MW3DS7WrH4VEznz4VZAcZD"
+    }
+
+    connection = http.client.HTTPSConnection("graph.facebook.com")
+    
+    try:
+        connection.request("POST", "/v21.0/544577852068009/messages", data, headers)
+        response = connection.getresponse()
+        print(response.status, response.reason)
+    except Exception as e:
+        agregar_mensajes_log(json.dumps(e))
+    finally:
+        connection.close()
+
+
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
