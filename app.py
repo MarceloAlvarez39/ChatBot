@@ -77,8 +77,21 @@ def recibir_mensajes(req):
         changes = entry['changes'][0]
         value = changes['value']
         objeto_mensaje = value['messages']
+        # Si quisiera obtener el nombre del usuario, entraría en value["contacts"][0][profile][name]
 
-        agregar_mensajes_log(json.dups(objeto_mensaje))
+        if objeto_mensaje:
+            messages = objeto_mensaje[0]
+            if "type" in messages:
+                tipo = messages["type"]
+                if tipo == "interactive":
+                    return 0
+                if "text" in messages:
+                    text = messages["text"]["body"]
+                    numero = messages["from"]
+
+
+        agregar_mensajes_log(json.dups(text))
+        agregar_mensajes_log(json.dups(numero))
 
         return jsonify({'messaje':'EVENT_RECEIVED'})
     except Exception as e:
