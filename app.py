@@ -13,38 +13,36 @@ db = SQLAlchemy(app)
 # Modelo de la tabla log
 class Log(db.Model):
     format = '%a %d %b %Y, %I:%M%p'
+    
     date = datetime.now().strftime(format)
     
     id = db.Column(db.Integer,primary_key=True)
     fecha_y_hora = db.Column(db.DateTime, default=datetime.strptime(date, format))
     texto = db.Column(db.TEXT)
 
+#Funcion para ordenar los registros por fecha y hora
+def ordenar_por_fecha_y_hora(registros):
+    return sorted(registros, key=lambda x: x.fecha_y_hora,reverse=True)
+
 #Crear tabla si no existe
 with app.app_context():
     #db.drop_all()
     db.create_all()
 
-    p1 = Log(texto="Hola tres")
-    p2 = Log(texto="hoshos")
-
-    db.session.add(p2)
-    db.session.add(p1)
-    db.session.commit()
-
-
-#Funcion para ordenar los registros por fecha y hora
-def ordenar_por_fecha_y_hora(registros):
-    return sorted(registros, key=lambda x: x.fecha_y_hora,reverse=True)
 
 @app.route('/')
+
+
+
+
 def index():
     # Obtener todos los registros de la base de datos
     registros = Log.query.all()
     registros_ordenados = ordenar_por_fecha_y_hora(registros)
     return render_template('index.html', registros=registros_ordenados)
 
-mensajes_log = []
 
+mensajes_log = []
 # Funcion para agregar mensajes y guardar en la base de datos
 def agregar_mensajes_log(texto):
     mensajes_log.append(texto)
