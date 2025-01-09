@@ -127,7 +127,7 @@ def enviar_mensajes(texto,numero):
 
     headers = {
         "Content-Type" : "application/json",
-        "Autorization" : "Bearer EACAeWmtpbAgBO3aZAeED7vClS1ZCZBZCfo6W4rxRkDkZC4phcrj3xBCQu2upjtZB6r4ZAUKcJMZBs2uGcI8xRh76viIia13LCsA9BDLzMU4fyKD6ZBAjjOPULHXkdXZAZBuNbYrbiXZCTcwPZBJ5j6yT6o2dHxpTjByZAZAVTi1AQgl91Lkfdh22AzgN1iiqEarkOZC7HuF2BiWdsspauGhAL51ZB8HKABGPCQ0sZD"
+        "Autorization" : "Bearer EACAeWmtpbAgBOxrph6TYcuLqv5aJ1XOc5mY3skEeMnxvkswLxdfj2zwlP5GYazshcB9xKnmIOSzQkTxYsDcp5ZBhzxZBJQ4KfOtETN14NoiHXZCyTKFHtYuJtviSVOflYvoLVKe6MUiFGEZAsobb95aKgx7X1HmhAZAJZB6ZBYsuOoYkYCVEw9tw2lZC2qLewuEQapZAkVnQBaL2aFat8wC6sd9wqAW8ZD"
     }
 
     connection = http.client.HTTPSConnection("graph.facebook.com")
